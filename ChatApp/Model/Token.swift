@@ -12,6 +12,15 @@ struct Token: Decodable {
     let token: String
 }
 
+struct UserNotFound: Decodable {
+    let userNotFound: Bool
+}
+
+struct CredentialEmpty: Decodable {
+    let isUsernameEmpty: Bool
+    let isPasswordEmpty: Bool
+}
+
 //struct TokenResponse: Decodable {
 //    let response: Token
 //}

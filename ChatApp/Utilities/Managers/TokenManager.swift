@@ -47,4 +47,18 @@ final class TokenManager {
         
         return nil
     }
+    
+    func removeJWT() {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrAccount as String: "JWT"
+        ]
+        
+        
+        SecItemDelete(query as CFDictionary) // Remove existing token
+        
+        let status = SecItemAdd(query as CFDictionary, nil)
+        
+        print(status == errSecSuccess ? "JWT deleted" : "Failed to delete JWT")
+    }
 }

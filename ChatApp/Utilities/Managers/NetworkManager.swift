@@ -23,7 +23,7 @@ final class NetworkManager {
         request.httpMethod = "POST"
         
         let body: [String: Any] = [
-            "username": "\(username)",
+            "username": "Christopher",
             "password": "\(password)"
         ]
         
@@ -36,26 +36,42 @@ final class NetworkManager {
             throw URLError(.badServerResponse)
         }
         
-        //        let responseString = String(data: data, encoding: .utf8) ?? "No Response"
-        //
-        //        print("\(responseString)")
-        
         do {
+            
+            let responseString = String(data: data, encoding: .utf8) ?? "No Response"
+            print("\(responseString)")
+            
             let decoder = JSONDecoder()
-            let response = try decoder.decode(Token.self, from: data)
             
-            tokenManager.storeJWT(token: response.token)
-            
-            let tokenValidation = try await validateJWTToken()
-            
-            try await getContacts()
-            
-            if tokenValidation.contains("true") {
-                return true
+            if let response = try? decoder.decode(UserNotFound.self, from: data) {
+                if !response.userNotFound {
+                    return false
+                }
             }
             
-            print("Responses \(response) \(tokenValidation)")
-        
+            if let response = try? decoder.decode(CredentialEmpty.self, from: data) {
+                if !response.isUsernameEmpty && !response.isPasswordEmpty {
+                    return false
+                }
+                return false
+            }
+
+            print("aaaaaaa\(response)")
+            
+            if let response = try? decoder.decode(Token.self, from: data) {
+                tokenManager.storeJWT(token: response.token)
+                
+                let tokenValidation = try await validateJWTToken()
+                                
+                if tokenValidation.contains("true") {
+                    return true
+                }
+                
+                
+            }
+            
+            print("aa\(response)")
+            
         }catch{
             
             print("\(error)")
@@ -96,18 +112,16 @@ final class NetworkManager {
     }
     
     
-    func getContacts() async throws {
+    func getContacts() async throws -> ContactsResponse{
         
         print("getting called")
         
         guard let url = URL(string: baseURL + "chat/contacts") else {
-            print("pont 1")
-            return
+            throw URLError(.badURL)
         }
         
         guard let token = tokenManager.retrieveJWT() else {
-            print("poin 2")
-            return
+            throw TokenError.tokenNotFound
         }
         
         var request = URLRequest(url: url)
@@ -119,44 +133,47 @@ final class NetworkManager {
         let (data, response) = try await URLSession.shared.data(for: request)
         
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            print("point 3")
             throw URLError(.badServerResponse)
         }
         
         do {
             let decoder = JSONDecoder()
-            let response = try decoder.decode(ContactsResponse.self, from: data).contacts
+            let response = try decoder.decode(ContactsResponse.self, from: data)
+            
             
             print("Contacts Response: \(response)")
-        
-        }catch{
             
+            return response
+            
+            
+            
+        }catch{
             print("\(error)")
-        
+            
         }
+        
+        return ContactsResponse(contacts: [], user: "User Not Found")
     }
     
     
-    func signUp(username: String, password: String) async throws {
-                       
+    func signUp(username: String, password: String) async throws -> Bool {
+        
         guard let url = URL(string: baseURL + "sign-up") else {
-            return
+            throw URLError(.badURL)
         }
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         
-       
-        
         let body: [String: Any] = [
             "username": "\(username)",
             "password": "\(password)"
         ]
-  
+        
         request.httpBody = try JSONSerialization.data(withJSONObject: body)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            
-            
+        
+        
         let (data, response) = try await URLSession.shared.data(for: request)
         
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
@@ -164,18 +181,35 @@ final class NetworkManager {
         }
         
         do {
-            let decoder = JSONDecoder()
-            let response = try decoder.decode(Token.self, from: data)
             
-            tokenManager.storeJWT(token: response.token)
+            let responseString = String(data: data, encoding: .utf8) ?? "No Response"
+            print("\(responseString)")
+            
+            let decoder = JSONDecoder()
+            
+            
+            if let response = try? decoder.decode(CredentialEmpty.self, from: data) {
+                
+                print(response)
+                
+                if !response.isPasswordEmpty && !response.isUsernameEmpty {
+                    return false
+                }
+                
+            }
+            
+            if let response = try? decoder.decode(Token.self, from: data) {
+                if response.success {
+                    tokenManager.storeJWT(token: response.token)
+                    return true
+                }
+            }
+            
         } catch {
             
             print("Sign up error: \(error)")
         }
-        
-        
-        let responseString = String(data: data, encoding: .utf8) ?? "No Response"
-        
-        print("\(responseString)")
+
+        return false
     }
 }

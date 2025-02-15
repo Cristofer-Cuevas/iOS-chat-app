@@ -11,7 +11,8 @@ import SwiftUI
 struct ChatAppApp: App {
     var body: some Scene {
         WindowGroup {
-            LoginFormView(isSingup: false)
+//            SplashView()
+                LoginFormView(isSingup: false)
         }
     }
 }
