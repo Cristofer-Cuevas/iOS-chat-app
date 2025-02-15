@@ -12,7 +12,7 @@ struct SearchView: View {
     
     @Binding var isMenuOpen: Bool
     
-    @Bindable var viewModel = ContactsListViewModel(contacts: ContactsResponse(contacts: [], user: ""), isLoading: false, searchText: "")
+    @Bindable var viewModel: ContactsListViewModel
     
     var body: some View {
         HStack {
@@ -57,5 +57,5 @@ struct SearchView: View {
 }
 
 #Preview {
-    SearchView(isMenuOpen: .constant(false))
+    SearchView(isMenuOpen: .constant(false), viewModel: ContactsListViewModel(contacts: ContactsResponse(contacts: [], user: ""), isLoading: false, searchText: ""))
 }

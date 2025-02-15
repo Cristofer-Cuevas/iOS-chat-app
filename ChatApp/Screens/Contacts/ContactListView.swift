@@ -21,7 +21,7 @@ struct ContactListView: View {
             VStack {
                 
                 VStack {
-                    SearchView(isMenuOpen: $isMenuOpen)
+                    SearchView(isMenuOpen: $isMenuOpen, viewModel: viewModel)
                     
                     
                 }
