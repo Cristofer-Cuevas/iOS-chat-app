@@ -57,5 +57,5 @@ struct SearchView: View {
 }
 
 #Preview {
-    SearchView(isMenuOpen: .constant(false), viewModel: ContactsListViewModel(contacts: ContactsResponse(contacts: [], user: ""), isLoading: false, searchText: ""))
+    SearchView(isMenuOpen: .constant(false), viewModel: ContactsListViewModel(contacts: ContactsResponse(contacts: [], user: ""), isLoading: false, searchText: "", selectedOption: .all))
 }

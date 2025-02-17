@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContactListCell: View {
     
-    let contact: Contact
+    let contact: UserList
     
     var body: some View {
         HStack {
@@ -18,7 +18,7 @@ struct ContactListCell: View {
                 ZStack {
                     Circle()
                         .stroke(Color.white, lineWidth: 7)
-                        .background(Color("onlineColor"))
+                        .background(Color(contact.isConnected ? "onlineColor": "offlineColor"))
                         .frame(width: 20, height: 20)
                         .cornerRadius(50)
             
@@ -47,5 +47,5 @@ struct ContactListCell: View {
 }
 
 #Preview {
-    ContactListCell(contact: Contact(username: "Mock User", message:"Message"))
+    ContactListCell(contact: UserList(username: "Mock User", isConnected: false, message:"Message"))
 }

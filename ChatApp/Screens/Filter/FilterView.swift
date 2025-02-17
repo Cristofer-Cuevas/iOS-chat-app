@@ -9,15 +9,15 @@ import SwiftUI
 
 struct FilterView: View {
     
-    @State var selectedItem: FilterModel
+    @Binding var selectedOption: FilterModel
     
     var body: some View {
         
         HStack {
             ForEach(FilterModel.allCases) { option in
-                FilterButtonsView(option: option, selectedItem: $selectedItem)
+                FilterButtonsView(option: option, selectedOption: $selectedOption)
                     .onTapGesture {
-                        selectedItem = option
+                        selectedOption = option
                         
                     }
                 
@@ -29,5 +29,5 @@ struct FilterView: View {
 }
 
 #Preview {
-    FilterView(selectedItem: .all)
+    FilterView(selectedOption: .constant(.all))
 }

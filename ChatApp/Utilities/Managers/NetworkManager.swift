@@ -141,7 +141,7 @@ final class NetworkManager {
             let response = try decoder.decode(ContactsResponse.self, from: data)
             
             
-            print("Contacts Response: \(response)")
+//            print("Contacts Response: \(response)")
             
             return response
             

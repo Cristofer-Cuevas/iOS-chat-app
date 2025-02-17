@@ -27,7 +27,7 @@ struct ContactListView: View {
                 }
                 
                 VStack {
-                    FilterView(selectedItem: .all)
+                    FilterView(selectedOption: $viewModel.selectedOption)
                 }
                 .padding()
                 
@@ -72,5 +72,5 @@ struct ContactListView: View {
 }
 
 #Preview {
-    ContactListView(isMenuOpen: false, path: .constant(["ContactList"]), viewModel: ContactsListViewModel(contacts: ContactsResponse(contacts: [], user: ""), isLoading: false, searchText: ""))
+    ContactListView(isMenuOpen: false, path: .constant(["ContactList"]), viewModel: ContactsListViewModel(contacts: ContactsResponse(contacts: [], user: ""), isLoading: false, searchText: "", selectedOption: .all))
 }

@@ -16,3 +16,11 @@ struct ContactsResponse: Decodable {
     let contacts: [Contact]
     let user: String
 }
+
+struct UserList: Hashable {
+    let username: String
+    let isConnected: Bool
+    let message: String?
+    
+    
+}

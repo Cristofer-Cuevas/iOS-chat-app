@@ -11,7 +11,7 @@ struct LoginFormView: View {
     @State var isSingup: Bool
     
     @Bindable var viewModel = LoginFormViewModel(username: "", password: "", alertItem: AlertContext.invalidCredentials, errorOccurred: false, isSignUpFailed: false, isLoginSuccessFul: false, isLoading: false, isValidatingSession: false)
-    var contactsViewModel = ContactsListViewModel(contacts: ContactsResponse(contacts: [], user: ""), isLoading: false, searchText: "")
+    var contactsViewModel = ContactsListViewModel(contacts: ContactsResponse(contacts: [], user: ""), isLoading: false, searchText: "", selectedOption: .all)
     
 //    @State var path: [String] = []
     
@@ -111,7 +111,7 @@ struct LoginFormView: View {
 }
 
 #Preview {
-    LoginFormView(isSingup: false, contactsViewModel: ContactsListViewModel(contacts: ContactsResponse(contacts: [], user: ""), isLoading: false, searchText: ""))
+    LoginFormView(isSingup: false, contactsViewModel: ContactsListViewModel(contacts: ContactsResponse(contacts: [], user: ""), isLoading: false, searchText: "", selectedOption: .all))
 }
 
 
