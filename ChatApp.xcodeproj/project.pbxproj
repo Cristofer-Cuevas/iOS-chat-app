@@ -33,6 +33,12 @@
 		3746EA152D59981C00A6DDE5 /* RingLoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3746EA142D59981C00A6DDE5 /* RingLoaderView.swift */; };
 		37B9E4772D6180BE004DB6A3 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 37B9E4762D6180BE004DB6A3 /* SocketIO */; };
 		37B9E4792D618110004DB6A3 /* SocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E4782D618110004DB6A3 /* SocketManager.swift */; };
+		37B9E47E2D657119004DB6A3 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E47D2D657119004DB6A3 /* ChatView.swift */; };
+		37B9E4802D657128004DB6A3 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E47F2D657128004DB6A3 /* ChatViewModel.swift */; };
+		37B9E4882D65772E004DB6A3 /* ChatFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E4872D65772E004DB6A3 /* ChatFieldView.swift */; };
+		37B9E48B2D657D14004DB6A3 /* MessageBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E48A2D657D14004DB6A3 /* MessageBoxView.swift */; };
+		37B9E48D2D6585F3004DB6A3 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B9E48C2D6585F3004DB6A3 /* Messages.swift */; };
+		37C055892D68260A00312549 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C055882D68260A00312549 /* MessageView.swift */; };
 		37FE51282D46DBD5009B742F /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FE51272D46DBD5009B742F /* NetworkManager.swift */; };
 		37FE512A2D46E79F009B742F /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FE51292D46E79F009B742F /* TokenManager.swift */; };
 		37FE512C2D46EF57009B742F /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FE512B2D46EF57009B742F /* Token.swift */; };
@@ -85,6 +91,12 @@
 		3746EA112D59613100A6DDE5 /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		3746EA142D59981C00A6DDE5 /* RingLoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingLoaderView.swift; sourceTree = "<group>"; };
 		37B9E4782D618110004DB6A3 /* SocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketManager.swift; sourceTree = "<group>"; };
+		37B9E47D2D657119004DB6A3 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		37B9E47F2D657128004DB6A3 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		37B9E4872D65772E004DB6A3 /* ChatFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatFieldView.swift; sourceTree = "<group>"; };
+		37B9E48A2D657D14004DB6A3 /* MessageBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBoxView.swift; sourceTree = "<group>"; };
+		37B9E48C2D6585F3004DB6A3 /* Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
+		37C055882D68260A00312549 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		37FE51272D46DBD5009B742F /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		37FE51292D46E79F009B742F /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		37FE512B2D46EF57009B742F /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
@@ -120,6 +132,7 @@
 		37037C822D469D9D00A41538 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				37B9E47C2D6570F3004DB6A3 /* Chat */,
 				3736C4C32D5C0D7E003E72BE /* Splash */,
 				3746EA092D58F00000A6DDE5 /* Filter */,
 				3746EA062D51822900A6DDE5 /* SignOut */,
@@ -138,6 +151,7 @@
 				37FE512D2D472CEF009B742F /* Contacts.swift */,
 				3746EA0F2D58F3C600A6DDE5 /* FilterModel.swift */,
 				3746EA112D59613100A6DDE5 /* Screen.swift */,
+				37B9E48C2D6585F3004DB6A3 /* Messages.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -154,6 +168,7 @@
 		37037C852D469DE000A41538 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				37B9E4892D657CEA004DB6A3 /* Message */,
 				3746EA132D59980700A6DDE5 /* Loaders */,
 				3746EA0C2D58F25C00A6DDE5 /* Buttons */,
 				3746E9FB2D50150100A6DDE5 /* Cells */,
@@ -303,6 +318,25 @@
 				373DC6A82D5EB1F50093B4A9 /* Loader.swift */,
 			);
 			path = Loaders;
+			sourceTree = "<group>";
+		};
+		37B9E47C2D6570F3004DB6A3 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				37B9E47D2D657119004DB6A3 /* ChatView.swift */,
+				37B9E4872D65772E004DB6A3 /* ChatFieldView.swift */,
+				37B9E47F2D657128004DB6A3 /* ChatViewModel.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		37B9E4892D657CEA004DB6A3 /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				37B9E48A2D657D14004DB6A3 /* MessageBoxView.swift */,
+				37C055882D68260A00312549 /* MessageView.swift */,
+			);
+			path = Message;
 			sourceTree = "<group>";
 		};
 		37FE51262D46DBC2009B742F /* Managers */ = {
@@ -472,9 +506,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37B9E4802D657128004DB6A3 /* ChatViewModel.swift in Sources */,
 				3746EA0E2D58F27200A6DDE5 /* FilterButtonsView.swift in Sources */,
 				3736C4C52D5C0DA9003E72BE /* SplashView.swift in Sources */,
 				37FE512E2D472CEF009B742F /* Contacts.swift in Sources */,
+				37B9E48D2D6585F3004DB6A3 /* Messages.swift in Sources */,
 				373DC6A92D5EB1F50093B4A9 /* Loader.swift in Sources */,
 				3746E9FA2D50120400A6DDE5 /* ContactsListViewModel.swift in Sources */,
 				37037C812D468A6F00A41538 /* LoginFormViewModel.swift in Sources */,
@@ -483,14 +519,18 @@
 				37FE512C2D46EF57009B742F /* Token.swift in Sources */,
 				37FE512A2D46E79F009B742F /* TokenManager.swift in Sources */,
 				37B9E4792D618110004DB6A3 /* SocketManager.swift in Sources */,
+				37B9E48B2D657D14004DB6A3 /* MessageBoxView.swift in Sources */,
 				3746EA152D59981C00A6DDE5 /* RingLoaderView.swift in Sources */,
 				3709DE702D4520FE006ABBAE /* ContentView.swift in Sources */,
 				37FE51282D46DBD5009B742F /* NetworkManager.swift in Sources */,
 				3709DE6E2D4520FE006ABBAE /* ChatAppApp.swift in Sources */,
 				3709DE992D45266F006ABBAE /* LoginFormView.swift in Sources */,
 				3746EA022D517A1F00A6DDE5 /* SearchView.swift in Sources */,
+				37B9E47E2D657119004DB6A3 /* ChatView.swift in Sources */,
+				37B9E4882D65772E004DB6A3 /* ChatFieldView.swift in Sources */,
 				3746EA102D58F3C600A6DDE5 /* FilterModel.swift in Sources */,
 				3746E9F72D5011EA00A6DDE5 /* ContactListView.swift in Sources */,
+				37C055892D68260A00312549 /* MessageView.swift in Sources */,
 				3746EA122D59613100A6DDE5 /* Screen.swift in Sources */,
 				3746E9F42D4FC98100A6DDE5 /* Alert.swift in Sources */,
 				3746E9FF2D502E4A00A6DDE5 /* Error.swift in Sources */,

@@ -10,10 +10,9 @@ import SwiftUI
 struct LoginFormView: View {
     @State var isSingup: Bool
     
-    @Bindable var viewModel = LoginFormViewModel(username: "", password: "", alertItem: AlertContext.invalidCredentials, errorOccurred: false, isSignUpFailed: false, isLoginSuccessFul: false, isLoading: false, isValidatingSession: false)
-    var contactsViewModel = ContactsListViewModel(contacts: ContactsResponse(contacts: [], user: ""), isLoading: false, searchText: "", selectedOption: .all)
+    @State var selectedUser: UserList = UserList(username: "", isConnected: false, message: "")
     
-//    @State var path: [String] = []
+    @State var viewModel = LoginFormViewModel(username: "", password: "", alertItem: AlertContext.invalidCredentials, errorOccurred: false, isSignUpFailed: false, isLoginSuccessFul: false, isLoading: false, isValidatingSession: false)
     
     var body: some View {
         NavigationStack (path: $viewModel.path) {
@@ -86,7 +85,9 @@ struct LoginFormView: View {
                     }.navigationDestination(for: String.self) { screen in
                         
                         if "ContactList" == screen {
-                            ContactListView(isMenuOpen: false, path: $viewModel.path, viewModel: contactsViewModel)
+                            ContactListView(isMenuOpen: false, path: $viewModel.path, selectedUser: $selectedUser)
+                        } else if "ChatView" == screen {
+                            ChatView(path: $viewModel.path, selectedUser: $selectedUser)
                         }
                     }.alert("Operation Failed", isPresented: $viewModel.errorOccurred) {
                         Button("OK", role: .cancel, action: { })
@@ -111,7 +112,7 @@ struct LoginFormView: View {
 }
 
 #Preview {
-    LoginFormView(isSingup: false, contactsViewModel: ContactsListViewModel(contacts: ContactsResponse(contacts: [], user: ""), isLoading: false, searchText: "", selectedOption: .all))
+    LoginFormView(isSingup: false)
 }
 
 

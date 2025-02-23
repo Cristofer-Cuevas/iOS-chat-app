@@ -10,7 +10,8 @@ import SwiftUI
 struct ContactListView: View {
     @State var isMenuOpen: Bool
     @Binding var path: [String]
-    @Bindable var viewModel: ContactsListViewModel
+    @State var viewModel: ContactsListViewModel = ContactsListViewModel(contacts: ContactsResponse(contacts: [], user: ""), isLoading: false, searchText: "", selectedOption: .all)
+    @Binding var selectedUser: UserList
     
     
     var body: some View {
@@ -22,8 +23,6 @@ struct ContactListView: View {
                 
                 VStack {
                     SearchView(isMenuOpen: $isMenuOpen, viewModel: viewModel)
-                    
-                    
                 }
                 
                 VStack {
@@ -45,7 +44,13 @@ struct ContactListView: View {
                     } else {
                         
                         List(viewModel.filteredContacts, id: \.self) { contact in
-                            ContactListCell(contact: contact)
+                            ContactListCell(contact: contact, isList: true)
+                                .onTapGesture {
+                                    selectedUser = UserList(username: contact.username, isConnected: contact.isConnected, message: "")
+                                    path.append("ChatView")
+                                    print(path)
+                                    print(selectedUser)
+                                }
                                 .listRowSeparator(.hidden)
                         }
                     }
@@ -55,8 +60,7 @@ struct ContactListView: View {
                 
                 
             }
-        }
-        
+        }        
         .navigationBarHidden(true)
         .listStyle(.plain)
         //        .ignoresSafeArea()
@@ -72,5 +76,5 @@ struct ContactListView: View {
 }
 
 #Preview {
-    ContactListView(isMenuOpen: false, path: .constant(["ContactList"]), viewModel: ContactsListViewModel(contacts: ContactsResponse(contacts: [], user: ""), isLoading: false, searchText: "", selectedOption: .all))
+    ContactListView(isMenuOpen: false, path: .constant(["ContactList"]), viewModel: ContactsListViewModel(contacts: ContactsResponse(contacts: [], user: ""), isLoading: false, searchText: "", selectedOption: .all), selectedUser: .constant(UserList(username: "", isConnected: true, message: "")))
 }
