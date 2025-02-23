@@ -12,38 +12,31 @@ import Foundation
 
 @Observable class SocketService {
     static let shared = SocketService()
-    static let tokenManager = TokenManager()
+    let tokenManager = NetworkManager.shared.tokenManager
     let manager: SocketManager
     let socket: SocketIOClient
     
-    
-    let headers: [String: String] = [
-        "Authorization": "\(tokenManager.retrieveJWT()!)"
-    ]
     var connectedUsers: [String] = []
     var isSocketConnected: Bool = false
     
 
     
     init() {
-        manager = SocketManager(socketURL: URL(string: "https://chatapp-x49l.onrender.com")!, config: [.log(true), .compress, .extraHeaders(["Authorization": "\(headers)"])])
+        
+        let headers: [String: String] = [
+            "Authorization": "\(tokenManager.retrieveJWT() ?? "")"
+        ]
+        print("headersss", headers)
+        manager = SocketManager(socketURL: URL(string: "https://chatapp-x49l.onrender.com")!, config: [.log(true), .compress, .extraHeaders(headers)])
         socket = manager.defaultSocket
         setupHandlers()
         
-        
-        
-//        socket.connect()
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             print("🔍 Socket status after 3 seconds: \(self.socket.status)")
         }
         
-        //        connect()
-      
     }
-  
-  
 
-    
     private func setupHandlers() {
         
         socket.on(clientEvent: .error) { data, ack in
@@ -58,22 +51,12 @@ import Foundation
         
         
         socket.on(clientEvent: .connect) {data, ack in
-            //                self.isSocketConnected = true
             
             print("socket connected")
         }
         
     }
     
-    
-    
-    
-    
-    func connect() {
-        //        socket.connect()
-        print("Connecting to socket")
-        //        print(tokenManager.retrieveJWT()!)
-    }
     
     func disconnect() {
         socket.disconnect()

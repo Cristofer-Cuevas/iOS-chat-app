@@ -10,6 +10,7 @@ import SwiftUI
 struct ContactListCell: View {
     
     let contact: UserList
+    var isList: Bool
     
     var body: some View {
         HStack {
@@ -37,7 +38,7 @@ struct ContactListCell: View {
                 Text(contact.username)
                     .fontWeight(.bold)
                 
-                Text(contact.message ?? "")
+                Text(isList ? contact.message ?? "" : contact.isConnected ? "online" : "offline")
                     
             }
         }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 50, alignment: .leading)
@@ -47,5 +48,5 @@ struct ContactListCell: View {
 }
 
 #Preview {
-    ContactListCell(contact: UserList(username: "Mock User", isConnected: false, message:"Message"))
+    ContactListCell(contact: UserList(username: "Mock User", isConnected: false, message:"Message"), isList: true)
 }

@@ -55,14 +55,14 @@ final class NetworkManager {
                 }
                 return false
             }
-
+            
             print("aaaaaaa\(response)")
             
             if let response = try? decoder.decode(Token.self, from: data) {
                 tokenManager.storeJWT(token: response.token)
                 
                 let tokenValidation = try await validateJWTToken()
-                                
+                
                 if tokenValidation.contains("true") {
                     return true
                 }
@@ -141,7 +141,7 @@ final class NetworkManager {
             let response = try decoder.decode(ContactsResponse.self, from: data)
             
             
-//            print("Contacts Response: \(response)")
+            //            print("Contacts Response: \(response)")
             
             return response
             
@@ -209,7 +209,43 @@ final class NetworkManager {
             
             print("Sign up error: \(error)")
         }
-
+        
         return false
+    }
+    
+    func getMessages(username: String, days: String) async throws -> MessageResponse {
+        guard let url = URL(string: baseURL + "chat/messages/\(username)/\(days)") else {
+            throw URLError(.badURL)
+        }
+        
+        guard let token = tokenManager.retrieveJWT() else {
+            throw TokenError.tokenNotFound
+        }
+        
+        var request = URLRequest(url: url)
+        request.addValue(token, forHTTPHeaderField: "Authorization")
+
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw URLError(.badServerResponse)
+        }
+
+        
+        do {
+            let responseString = String(data: data, encoding: .utf8) ?? "No Response"
+            print("\(responseString)")
+            
+            let decoder = JSONDecoder()
+            
+            if let response = try? decoder.decode(MessageResponse.self, from: data) {
+                print(response)
+                
+                return response
+            }
+        }
+        
+        return MessageResponse(messages: [Message(_id: "", sender: "", recipient: "", message: "", date: "")], requester: "")
     }
 }

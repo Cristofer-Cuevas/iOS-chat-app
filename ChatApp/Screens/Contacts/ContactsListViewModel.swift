@@ -6,12 +6,11 @@
 //
 
 import Foundation
+import SocketIO
 
 
 @Observable class ContactsListViewModel {
-    
     var socketManager: SocketService
-    
     var contacts: ContactsResponse
     var isLoading: Bool
     var searchText: String {
@@ -46,7 +45,6 @@ import Foundation
         self.searchText = searchText
         self.socketManager = socketManager
         self.selectedOption = selectedOption
-        
     }
     
     func setupHandlers() {
@@ -80,16 +78,25 @@ import Foundation
         if selectedOption == .all {
             filteredContacts = userList.filter { searchText.isEmpty || $0.username.localizedCaseInsensitiveContains(searchText) }
         } else if selectedOption == .online {
-            filteredContacts = userList.filter {$0.isConnected == true }
+            filteredContacts = userList.filter {$0.isConnected == true}
+            filteredContacts = filteredContacts.filter {searchText.isEmpty || $0.username.localizedCaseInsensitiveContains(searchText)}
+
         } else {
-            filteredContacts = userList.filter {$0.isConnected == false }
+            
+            filteredContacts = userList.filter {$0.isConnected == false}
+            filteredContacts = filteredContacts.filter {searchText.isEmpty || $0.username.localizedCaseInsensitiveContains(searchText)}
         }
         
 
     }
     
     func getContacts () {
-        socketManager.socket.connect()
+                print("sucket status:" ,socketManager.socket.status)
+        if socketManager.socket.status == .notConnected {
+            print("CONNECTING")
+            socketManager.socket.connect()
+        }
+        
         isLoading.toggle()
         
         
@@ -108,8 +115,6 @@ import Foundation
             }
         }
     }
-    
-    
-    
+
 }
 
